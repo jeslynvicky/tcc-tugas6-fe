@@ -37,7 +37,6 @@ const deleteNote = async (id) => {
                             <th>No</th>
                             <th>Judul</th>
                             <th>Isi</th>
-                            <th>Kategori</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -47,7 +46,6 @@ const deleteNote = async (id) => {
                             <td>{index+1}</td>
                             <td>{note.judul}</td>
                             <td>{note.isi}</td>
-                            <td>{note.kategori}</td>
                             <td>
                                 <div className="is-flex is-justify-content-space-between gap-2" style={{ width: "110px" }}>
                                     <Link to={`edit/${note.id}`} className="button is-small is-info">Edit</Link>
