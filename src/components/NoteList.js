@@ -11,8 +11,8 @@ useEffect (() =>{
 
 },[]);
 
-const getNotes = async () =>{
-    const response = await axios.get(`${BASE_URL}/notes`);
+const getNotes = async () => {
+    const response = await axios.get(`${BASE_URL}/notesdata`);
     setNote(response.data);
 }
 
