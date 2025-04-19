@@ -18,7 +18,7 @@ const getNotes = async () => {
 
 const deleteNote = async (id) => {
     try {
-        await axios.delete(`${BASE_URL}/hapus-catatan/${id}`);
+        await axios.delete(`${BASE_URL}/delete-notes/${id}`);
         getNotes();
     } catch (error) {
         console.log(error);
@@ -30,7 +30,7 @@ const deleteNote = async (id) => {
                 <h1 className="title has-text-centered has-text-info">
                     Catatan
                 </h1>
-                <Link to={`add`} className='button is-success mb-3'>Buat Catatan Baru</Link>
+                <Link to="/add" className='button is-success mb-3'>Buat Catatan Baru</Link>
                 <table className='table is-striped is-fullwidth'>
                     <thead className="has-background-info has-text-white">
                         <tr>
@@ -48,7 +48,7 @@ const deleteNote = async (id) => {
                             <td>{note.isi}</td>
                             <td>
                                 <div className="is-flex is-justify-content-space-between gap-2" style={{ width: "110px" }}>
-                                    <Link to={`edit/${note.id}`} className="button is-small is-info">Edit</Link>
+                                    <Link to={`/edit/${note.id}`} className="button is-small is-info">Edit</Link>
                                     <button onClick={() => deleteNote(note.id)} className="button is-small is-warning">Hapus</button>
                                 </div>
                             </td>
