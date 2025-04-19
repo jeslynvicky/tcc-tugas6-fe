@@ -4,61 +4,77 @@ import { Link } from 'react-router-dom';
 import { BASE_URL } from '../utils';
 
 const NoteList = () => {
-const [notes, setNote] = useState ([]);
+  const [notes, setNote] = useState([]);
 
-useEffect (() =>{
+  useEffect(() => {
     getNotes();
+  }, []);
 
-},[]);
-
-const getNotes = async () => {
+  const getNotes = async () => {
     const response = await axios.get(`${BASE_URL}/notesdata`);
     setNote(response.data);
-}
+  }
 
-const deleteNote = async (id) => {
+  const deleteNote = async (id) => {
     try {
-        await axios.delete(`${BASE_URL}/delete-notes/${id}`);
-        getNotes();
+      await axios.delete(`${BASE_URL}/delete-notes/${id}`);
+      getNotes();
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-}
-    return (
-        <div className="columns mt-5 is-centered">
-            <div className="column is-half">
-                <h1 className="title has-text-centered has-text-info">
-                    Catatan
-                </h1>
-                <Link to="/add" className='button is-success mb-3'>Buat Catatan Baru</Link>
-                <table className='table is-striped is-fullwidth'>
-                    <thead className="has-background-info has-text-white">
-                        <tr>
-                            <th>No</th>
-                            <th>Judul</th>
-                            <th>Isi</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {notes.map((note,index) => (
-                        <tr key = {note.id}>
-                            <td>{index+1}</td>
-                            <td>{note.judul}</td>
-                            <td>{note.isi}</td>
-                            <td>
-                                <div className="is-flex is-justify-content-space-between gap-2" style={{ width: "110px" }}>
-                                    <Link to={`/edit/${note.id}`} className="button is-small is-info">Edit</Link>
-                                    <button onClick={() => deleteNote(note.id)} className="button is-small is-warning">Hapus</button>
-                                </div>
-                            </td>
-                        </tr>
-                        ))}
-                    </tbody>
-                </table>  
-            </div>
+  }
+
+  return (
+    <div style={{ backgroundColor: '#fdeff4', minHeight: '100vh', paddingTop: '30px' }}>
+      <div className="columns is-centered">
+        <div className="column is-half">
+          <h1 className="title has-text-centered" style={{ color: '#d63384' }}>
+            Daftar Catatan
+          </h1>
+          <div className="has-text-right mb-3">
+            <Link to="/add" className="button" style={{ backgroundColor: '#ff69b4', color: 'white' }}>
+              ➕ Buat Catatan Baru
+            </Link>
+          </div>
+          <table className='table is-fullwidth is-striped' style={{ borderRadius: '10px', overflow: 'hidden' }}>
+            <thead style={{ backgroundColor: '#f8bbd0', color: 'white' }}>
+              <tr>
+                <th>No</th>
+                <th>Judul</th>
+                <th>Isi</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              {notes.length === 0 ? (
+                <tr>
+                  <td colSpan="4" className="has-text-centered">Belum ada catatan 💭</td>
+                </tr>
+              ) : (
+                notes.map((note, index) => (
+                  <tr key={note.id}>
+                    <td>{index + 1}</td>
+                    <td>{note.judul}</td>
+                    <td>{note.isi.length > 50 ? note.isi.substring(0, 50) + "..." : note.isi}</td>
+                    <td>
+                      <div className="buttons are-small">
+                        <Link to={`/edit/${note.id}`} className="button is-light" style={{ backgroundColor: '#ffb6c1' }}>
+                          ✏️
+                        </Link>
+                        <button onClick={() => deleteNote(note.id)} className="button is-light" style={{ backgroundColor: '#ffccd5' }}>
+                          🗑️
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
-    )
+      </div>
+    </div>
+  )
 }
 
-export default NoteList
+export default NoteList;
